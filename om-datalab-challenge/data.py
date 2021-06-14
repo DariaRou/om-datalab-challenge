@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 import os
 import spacy
-
+import nltk
 import string
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
@@ -13,7 +13,7 @@ from nltk.tokenize import TweetTokenizer
 stop = set(stopwords.words('french'))
 nlp=spacy.load("fr_core_news_md")
 
-import nltk
+
 nltk.download('stopwords')
 nltk.download('punkt')
 nltk.download('wordnet')
@@ -29,18 +29,17 @@ def om_get_data(n):
 # Preprocessing data 
 def om_clean_text(df):
     
-    """
-        #replace emojis:
-        emojis=demoji.findall(text)
-        if emojis != {}:
-            for key,value in emojis.items(): 
-                if key in text:
-                    try:
-                        translated_text=ts.translate_html(value, translator=ts.google, to_language='fr', n_jobs=-1)
-                        text=text.replace(key,translated_text)
-                    except TypeError:
+    #replace emojis:
+    emojis=demoji.findall(text)
+    if emojis != {}:
+        for key,value in emojis.items(): 
+            if key in text:
+                try:
+                    translated_text=ts.translate_html(value, translator=ts.google, to_language='fr', n_jobs=-1)
+                    text=text.replace(key,translated_text)
+                except TypeError:
                         pass
-    """
+    
     # lower text
     text = text.lower()
     # remove puncutation
@@ -57,5 +56,5 @@ def om_clean_text(df):
 
 
 if __name__ == '__main__':
-    n= 5000
+    n= 100
     df = om_get_data(n)
