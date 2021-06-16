@@ -75,15 +75,16 @@ if __name__ == "__main__":
     X = data['clean_text']
     # hold out
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
-    # train
+    # Instanciation
     my_trainer = Trainer(X_train,y_train)
-    
+    # Def pipeline, grid_search and fit
     pipeline = my_trainer.set_pipeline()
-    
-    my_trainer.run(X_train, y_train, pipeline)
+    pipe = pipeline.grid_search(X_train, y_train)
+    my_trainer.run(X_train, y_train, pipe)
 
     # evaluate
     rmse = my_trainer.evaluate(X_test, y_test)
+    #Prediction
     prediction = my_trainer.predict(X_test)
     print(f"Sentiment is :" {prediction})
     print(f'rmse of the model is : {rmse}')
